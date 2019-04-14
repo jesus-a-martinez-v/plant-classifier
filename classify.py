@@ -1,13 +1,16 @@
 from __future__ import print_function
-from rgbhistogram import RGBHistogram
-from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-import numpy as np
+
 import argparse
 import glob
+
 import cv2
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+from rgbhistogram import RGBHistogram
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('-i', '--images', required=True, help='Path to the image dataset.')
