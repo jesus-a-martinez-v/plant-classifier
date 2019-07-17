@@ -11,8 +11,9 @@ from sklearn.preprocessing import LabelEncoder
 from rgbhistogram import RGBHistogram
 
 argparser = argparse.ArgumentParser()
-argparser.add_argument('-i', '--images', required=True, help='Path to the image dataset.')
-argparser.add_argument('-m', '--masks', required=True, help='Path to the image dataset.')
+argparser.add_argument('-i', '--images', required=True, help='Path to the image dataset.', type=str)
+argparser.add_argument('-m', '--masks', required=True, help='Path to the image dataset.', type=str)
+argparser.add_argument('-s', '--sample-size', help='Number of images to classify.', default=10, type=int)
 arguments = vars(argparser.parse_args())
 
 image_paths = sorted(glob.glob(arguments['images'] + '/*.png'))
@@ -37,14 +38,14 @@ target_names = np.unique(target)
 label_encoder = LabelEncoder()
 target = label_encoder.fit_transform(target)
 
-(train_data, test_data, train_target, test_target) = train_test_split(data, target, test_size=.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=.3, random_state=42)
 
 model = RandomForestClassifier(n_estimators=25, random_state=84)
-model.fit(train_data, train_target)
+model.fit(X_train, y_train)
 
-print(classification_report(test_target, model.predict(test_data), target_names=target_names))
+print(classification_report(y_test, model.predict(X_test), target_names=target_names))
 
-for i in np.random.choice(np.arange(0, len(image_paths)), 10):
+for i in np.random.choice(np.arange(0, len(image_paths)), arguments['sample_size']):
     image_path = image_paths[i]
     mask_path = mask_paths[i]
 
