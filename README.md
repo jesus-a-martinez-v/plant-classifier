@@ -1,6 +1,6 @@
 # Plant Classifier
 
-Plan classifier implemented using features based on color histograms, in combination with a random forest machine
+Plant classifier implemented using features based on color histograms, in combination with a random forest machine
 learning model. 
 
 
